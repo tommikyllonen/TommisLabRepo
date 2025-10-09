@@ -10,5 +10,3 @@ def frameWord(word):
     print(f"* {word} *")
     print("*" * rowLength)
 
-
-main()

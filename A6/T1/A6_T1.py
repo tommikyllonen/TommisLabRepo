@@ -3,8 +3,8 @@ def main():
     print("Program starting.")
     print("This program can read a file.")
     fileName = input("Insert filename: ")
-    print(f"#### START \"{fileName}\" ####")
     file = open(fileName, "r")
+    print(f"#### START \"{fileName}\" ####")
     while True:
         line = file.readline()
         if len(line) == 0:

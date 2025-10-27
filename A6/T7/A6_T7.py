@@ -1,4 +1,3 @@
-
 # This is a Macgyver patch for the tests to pass....
 # its ugly, but it works...
 def main():
@@ -13,6 +12,9 @@ def main():
     writeFile(fileName, cipheredData)
     print("Program ending.")
     return None
+
+
+
 
 # English alphabets (2 x 26)
 LOWER_ALPHABETS = "abcdefghijklmnopqrstuvwxyz"

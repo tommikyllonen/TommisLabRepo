@@ -3,7 +3,7 @@ random.seed(1234)
 
 def printImage(sign:str, player: str):
     print("#########################")
-    if sign == '1':
+    if sign == 'rock':
         print(f"{player} chose rock.\n")
         print("    _______")
         print("---'   ____)")
@@ -11,7 +11,7 @@ def printImage(sign:str, player: str):
         print("      (_____)")
         print("      (____)")
         print("---.__(___) ")
-    elif sign == '2':
+    elif sign == 'paper':
         print(f"{player} chose paper.\n")
         print("     _______")
         print("---'    ____)____")
@@ -20,7 +20,7 @@ def printImage(sign:str, player: str):
         print("         _______)")
         print(" ---.__________)")
 
-    elif sign == '3':
+    elif sign == 'scissors':
         print(f"{player} chose scissors.\n")
         print("    _______")
         print("---'   ____)____")
@@ -30,12 +30,16 @@ def printImage(sign:str, player: str):
         print("---.__(___)")
     print("")
 
-def showRoundWinner(player1: str, player2: str, choice1: str, choice2: str):
+def showRoundWinner(player1: str, player2: str, choice1: str, choice2: str, winner: str):
     print("")
     print("#########################")
     print("Results:")
-    if(winner):
-        print(f"{player1} chose {choice1}, {player2} chose {choice2}.")
+    if(winner == "Tie"):
+        print(f"Draw! Both players chose {choice1}")
+    if(winner == player1):
+        print(f"{player1} {choice1} beats {player2} {choice2}.")
+    if(winner == player2):
+        print(f"{player2} {choice2} beats {player1} {choice1}.")
 
 def printMenu():
     print("Options:")
@@ -44,33 +48,51 @@ def printMenu():
     print("3 - Scissors")
     print("0 - Quit game")
     selection = input("Your choice: ")
-    print("Rock! Paper! Scissors! Shoot!")
+    if(selection != "0"):
+        print("Rock! Paper! Scissors! Shoot!")
     return selection
-     
+
+
+def changeToText(num:str):
+    result = "" 
+    if (num == "1"):result = "rock"
+    if (num == "2"):result = "paper"
+    if (num == "3"):result = "scissors"
+    if (num == "0"): return num
+
+    return result
+
+
 def gamePlay(player1: str, player2: str):
     print("Game starts...")
+    player1Score = 0
+    player2Score = 0
+    ties = 0
     while True:
-        # whosTurn = player2 if whosTurn == player1 else player1
-
         winner = None
-        P1selection = printMenu()
-        P2Selection = str(random.randint(1,3))
+
+        P1selection = changeToText(printMenu())
+        if P1selection == "0":
+            break
+        P2Selection = changeToText(str(random.randint(1,3)))
+
         printImage(P1selection, player1)
         printImage(P2Selection, player2)
-
         #Selcect winner:
-        if (P1selection == "1" and P2Selection == "3") or (P1selection == "2" and P2Selection == "1") or (P1selection == "3" and P2Selection == "2"):
+        if (P1selection == "rock" and P2Selection == "scissors") or (P1selection == "paper" and P2Selection == "rock") or (P1selection == "scissors" and P2Selection == "paper"):
             winner = player1
-        elif (P2Selection == "1" and P1selection == "3") or (P2Selection == "2" and P1selection == "1") or (P2Selection == "3" and P1selection == "2"):
+            player1Score += 1
+        elif (P2Selection == "rock" and P1selection == "scissors") or (P2Selection == "paper" and P1selection == "rock") or (P2Selection == "scissors" and P1selection == "paper"):
             winner = player2
+            player2Score += 1
         elif P1selection == P2Selection:
             winner = "Tie"
-        if P1selection == "0":
-            print("or playing!")
-            break
-        showRoundWinner(player1, player2, P1selection, P2Selection)
-        # if selection == "1":
-     
+            ties += 1
+        showRoundWinner(player1, player2, P1selection, P2Selection, winner)
+    #print results
+    print(f"{player1} - wins ({player1Score}), losses ({player2Score}), draws ({ties})")
+    print(f"{player2} - wins ({player2Score}), losses ({player1Score}), draws ({ties})")
+
 
 
 def main() -> None:
